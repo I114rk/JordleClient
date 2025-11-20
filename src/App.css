@@ -1,0 +1,323 @@
+/* Базовые стили */
+body {
+  margin: 0;
+  background-color: #121213;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 20px;
+}
+
+/* Хедер Jordle */
+.jordle-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #3a3a3c;
+  padding-bottom: 15px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.jordle-header h1 {
+  margin: 0;
+  font-size: 3rem;
+  letter-spacing: 5px;
+  /* Неоновый градиент */
+  background: linear-gradient(90deg, #ff0055, #b000ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: #818384;
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+/* Сетка */
+.grid {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #3a3a3c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  user-select: none;
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+
+.cell.active-input {
+  border-color: #818384;
+  animation: pop 0.1s ease-in-out;
+}
+
+/* Цвета статусов */
+.cell.green {
+  background-color: #538d4e;
+  border-color: #538d4e;
+  color: white;
+}
+
+.cell.yellow {
+  background-color: #b59f3b;
+  border-color: #b59f3b;
+  color: white;
+}
+
+.cell.grey {
+  background-color: #3a3a3c;
+  border-color: #3a3a3c;
+  color: white;
+}
+
+/* Модальное окно результата */
+.result-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+.result-content {
+  background-color: #1f1f1f;
+  border: 1px solid #555;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+  max-width: 300px;
+  transform: scale(1);
+  animation: slideUp 0.3s ease-out;
+}
+
+.result-content h2 {
+  font-size: 2.5rem;
+  margin: 0 0 10px;
+  color: #538d4e; /* Цвет победы */
+}
+
+.definition {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #d7dadc;
+  margin-bottom: 20px;
+}
+
+.reset-btn {
+  background: linear-gradient(90deg, #ff0055, #b000ff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  opacity: 0.9;
+}
+
+/* Анимации */
+@keyframes pop {
+  50% { transform: scale(1.05); }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Стили для Клавиатуры */
+.keyboard {
+  max-width: 600px;
+  width: 100%;
+  margin-top: 20px;
+  user-select: none;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.key {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding: 0;
+  height: 48px;
+  cursor: pointer;
+  background-color: #818384; /* Базовый цвет */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin: 0 4px;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  transition: background-color 0.1s ease;
+}
+
+/* Изменение ширины специальных клавиш */
+.key[key='ENTER'], .key[key='BACKSPACE'] {
+  flex-grow: 1.5;
+  font-size: 0.7rem;
+}
+
+/* Цвета статусов для Клавиатуры */
+
+/* 1. НЕ ИСПОЛЬЗОВАН (Dark Grey - Default) */
+.key.default {
+  background-color: #818384; 
+}
+
+/* 2. НЕТ В СЛОВЕ (КРАСНЫЙ - Grey в игре) */
+.key.red {
+  background-color: #555555; /* Используем более темный серый, чтобы лучше контрастировал с default */
+  color: white;
+}
+
+/* 3. ЕСТЬ, НО НЕ НА МЕСТЕ (ЖЕЛТЫЙ) */
+.key.yellow {
+  background-color: #b59f3b;
+  color: white;
+}
+
+/* 4. НА МЕСТЕ (ЗЕЛЕНЫЙ) */
+.key.green {
+  background-color: #538d4e;
+  color: white;
+}
+
+/* ... (весь предыдущий код CSS) ... */
+
+/* Кнопка Словаря */
+.dict-button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: #3a3a3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dict-button:hover {
+    background-color: #555;
+}
+
+/* Сообщение об ошибке */
+.error-message {
+    position: absolute;
+    top: 100px;
+    background-color: #ff5555;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    animation: fadeOut 3s forwards;
+    z-index: 10;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translateY(0); }
+    15% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 0; display: none; }
+}
+
+
+/* Стили для Модального окна Словаря */
+.dictionary-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.dictionary-content {
+    background-color: #1f1f1f;
+    border: 1px solid #555;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 80vw;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dictionary-content h2 {
+    margin-top: 0;
+    color: #b000ff;
+    border-bottom: 1px solid #3a3a3c;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.dictionary-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.dict-entry {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #3a3a3c;
+}
+
+.dict-word {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #538d4e; /* Green accent */
+    margin-right: 10px;
+}
+
+.dict-desc {
+    font-size: 0.9rem;
+    color: #d7dadc;
+}
